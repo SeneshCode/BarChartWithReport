@@ -199,12 +199,21 @@ public class BarChartExample extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         chart.clear();
-        chart.addData(new ModelChart("January", new double[]{500, 200, 100, 89}));
-        chart.addData(new ModelChart("February", new double[]{600, 750, 90, 150}));
-        chart.addData(new ModelChart("March", new double[]{200, 350, 460, 900}));
-        chart.addData(new ModelChart("April", new double[]{480, 150, 750, 700}));
-        chart.addData(new ModelChart("May", new double[]{350, 540, 300, 150}));
-        chart.addData(new ModelChart("June", new double[]{190, 280, 81, 200}));
+        for (BarChartDatas barChartDatas : dataList) {
+            if (barChartDatas.getCategoryField().equals("Income")) {
+                income = barChartDatas.getValueField();
+            }
+            if (barChartDatas.getCategoryField().equals("Expense")) {
+                expense = barChartDatas.getValueField();
+            }
+            if (barChartDatas.getCategoryField().equals("Profit")) {
+                profit = barChartDatas.getValueField();
+            }
+            if (barChartDatas.getCategoryField().equals("Cost")) {
+                cost = barChartDatas.getValueField();
+                chart.addData(new ModelChart("January", new double[]{income, expense, profit, cost}));
+            }
+        }
         chart.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -216,8 +225,8 @@ public class BarChartExample extends javax.swing.JFrame {
         parameters.put("Parameter1", data);
         try {
             
-            JasperPrint JP = JasperFillManager.fillReport("src/tempdel/TestChartDelTemp.jasper", parameters, new JREmptyDataSource());
-            JasperViewer jv = new JasperViewer(JP);
+            JasperPrint JP = JasperFillManager.fillReport("src/main/TestChartDelTemp.jasper", parameters, new JREmptyDataSource());
+            JasperViewer jv = new JasperViewer(JP,false);
             jv.setZoomRatio(.80f);
             jv.setVisible(true);
             
